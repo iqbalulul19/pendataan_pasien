@@ -1,12 +1,25 @@
-<?php
-include("koneksi.php");?>
-
 <html>
 <head>
 </head>
 <body>
     <h1>Data Pasien</h1>
     <h4> <a href=index.php>Ke Halaman Utama</a></h4>
+<?php
+include("koneksi.php");
+?>
+
+<form action="pasien.php" method="GET">
+    <input type="text" name="cari">
+    <input type="submit" value="Cari">
+</form>
+
+<?php
+if(isset($_GET['cari'])){
+    $cari = $_GET['cari'];
+    echo "<b>Hasil Pencarian : ".$cari."</b>";
+}
+?>
+
     <table border="1">
         <tr>
             <th>No. Pasien</th>
@@ -23,12 +36,21 @@ include("koneksi.php");?>
             <th>aksi</th>
         </tr>
 
+        
 <?php
-    include("koneksi.php");
+include("koneksi.php");
+
+if(isset($_GET['cari'])){
+    $cari = $_GET['cari'];
+    $sql = "SELECT * FROM tb_pasien WHERE nama_lengkap LIKE '%".$cari."%'";
+    $query=mysqli_query($koneksi, $sql);
+
+}else{
     $sql='SELECT * FROM tb_pasien';
     $query = mysqli_query($koneksi, $sql);
+}
 
-    while($datapasien=mysqli_fetch_array($query)){
+while($datapasien=mysqli_fetch_array($query)){
     echo "<tr>";
             echo "<td>".$datapasien['id']."</td>";
             echo "<td>".$datapasien['nama_lengkap']."</td>";

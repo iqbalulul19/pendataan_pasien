@@ -14,15 +14,17 @@ if(isset($_POST['tambah'])){
     $tanggal_lahir=$_POST['tanggal_lahir'];
     $no_kamar=$_POST['no_kamar'];
 
-
-    $sql = "INSERT INTO tb_pasien (nama_lengkap, alamat, jk, no_telp, agama, tanggal_masuk, gejala, tempat_lahir, tanggal_lahir, no_kamar) 
-    VALUES ('$nama_lengkap', '$alamat', '$jk', '$no_telp', '$agama', '$tanggal_masuk', '$gejala', '$tempat_lahir', '$tanggal_lahir', '$no_kamar')";
-    $query=mysqli_query($koneksi, $sql);
+    $sql = "UPDATE tb_pasien SET nama_lengkap='$nama_lengkap', alamat='$alamat', jk='$jk', no_telp='$no_telp',
+    agama='$agama', tanggal_masuk='$tanggal_masuk', gejala='$gejala', tempat_lahir='$tempat_lahir', 
+    tanggal_lahir='$tanggal_lahir', no_kamar='$no_kamar' where id=$kode";
+    $query=mysqli_query($koneksi,$sql);
 
     if($query){
-        header('Location:index.php?status=sukses');
-    }else{
-        header('Location:index.php?status=gagal');
-    }
+        header('Location:pasien.php');
+    } else{
+        die ("gagal mengedit");
+    }}
+    else{
+        die("akses dilarang");
     }
     ?>
